@@ -1,0 +1,28 @@
+{
+  "API":[
+    {
+      "ApiName" : "BankDelete",
+      "httpMethod" : "POST",
+      "sourceSql" : "SELECT BANK_CD, BANK_NAME_KANA, BANK_NAME_KANJI, 'DELETED' AS STATUS, 'RecordTypeId' AS RecordTypeId FROM (SELECT TRIM(
+      TO_CHAR(BANK_CD,'0000')) AS BANK_CD, BANK_NAME_KANA, CASE WHEN BANK_CD = 9900 THEN 'abc' ELSE BANK_NAME_KANJI END AS BANK_NAME_KANJI
+      FROM DIF_BANK WHERE DIF.PROCESS_FLG = 'TRUE') GROUP BY BANK_CD, BANK_NAME_KANA, BANK_NAME_KANJI FOR READ ONLY WITH UR",
+      "schemaName" : "Bank_Delete_Schema",
+      "sourceFields" : "BANK_CD, BANK_NAME_KANA, BANK_NAME_KANJI, STATUS, RECORDTYPEID",
+      "salesForceFields" : "Integration_key__c,Kana__c,Name,Status__c,RecordTypeId",
+      "salesForceRestUrl" : "/services/data/v41.0/jobs/ingest/",
+      "ObbjectAndOperation" : "{\"object\":\"Account\",\"operation\":\"upsert\",\"externalIdFieldName\":\"Integration_key__c\"}",
+      "recordTypeIdUrl" :"/services/data/v41.0/query/?q=SELECT+Id+FROM+RecordType+where+sobjecttype+='Account'+and+developername+='Bank'+and+IsActive=true",
+      "batchSize" : 50000,
+      "operation" : "UPSERTII",
+      "RunType" : "FullLoad",
+      "cdcCondition" : "",
+      "client_id" : "3MVG9z6NAroNkeMnZO7chEKaJ02LMFvat",
+      "client_secret" : "8E9221CB650B",
+      "refresh_token" : "5Aeep89765gEw",
+      "APIPriority" : "1",
+      "MaxPriority" : "30",
+      "Source" : "db2",
+      "Missing" : ""
+    }
+  ]
+}
